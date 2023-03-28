@@ -12,8 +12,28 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { getSession } from "next-auth/react";
 
-const EventPage = () => {
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/api/auth/signin",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      session,
+    },
+  };
+};
+
+const EventPage = ({ user }) => {
   return (
     <Flex py={6}>
       <Container maxW="container.xl">
@@ -43,7 +63,6 @@ const EventPage = () => {
               <Heading size="md">Planing de votre evenement</Heading>
               <Divider />
               <VStack spacing={4}>
-                <PlaningBloc />
                 <PlaningBloc />
                 <PlaningBloc />
               </VStack>

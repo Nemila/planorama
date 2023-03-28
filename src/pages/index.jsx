@@ -8,6 +8,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -27,7 +28,9 @@ export default function Home() {
         <Text fontSize="lg">
           De l&apos;idée à l&apos;exécution, nous avons tout prévu.
         </Text>
-        <Button colorScheme="blue">Commencez</Button>
+        <Button colorScheme="blue" as={Link} href="/events">
+          Commencez
+        </Button>
       </VStack>
     </Flex>
   );
