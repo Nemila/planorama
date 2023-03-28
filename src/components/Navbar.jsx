@@ -20,6 +20,8 @@ const Navbar = () => {
             leftIcon={<HiSparkles size={24} />}
             fontSize={18}
             variant="link"
+            as={Link}
+            href="/"
           >
             Planorama
           </Button>
@@ -27,10 +29,13 @@ const Navbar = () => {
           <Spacer />
 
           <HStack>
+            <Button variant="ghost" as={Link} href="/profile">
+              Mon profile
+            </Button>
             <Button variant="ghost" as={Link} href="/events">
               Evenements
             </Button>
-            <Button variant="ghost">Profile</Button>
+            <Button variant="ghost">Se deconnecter</Button>
           </HStack>
         </Flex>
       </Container>

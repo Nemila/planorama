@@ -8,7 +8,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { HiCog6Tooth, HiEye } from "react-icons/hi2";
+import { HiCalendarDays, HiCog6Tooth, HiEye } from "react-icons/hi2";
 import React from "react";
 import Link from "next/link";
 
@@ -33,10 +33,10 @@ const EventDetails = () => {
           as={Link}
           w="full"
           colorScheme="blue"
-          leftIcon={<HiEye size={18} />}
+          leftIcon={<HiCalendarDays size={18} />}
           size="sm"
         >
-          Apercu
+          Planifier
         </Button>
       </ButtonGroup>
     </VStack>
