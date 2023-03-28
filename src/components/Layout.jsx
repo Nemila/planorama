@@ -1,7 +1,13 @@
-import { ChakraProvider, Flex } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme, Flex } from "@chakra-ui/react";
 import Head from "next/head";
 import Navbar from "./Navbar";
 import { SessionProvider } from "next-auth/react";
+
+const theme = extendTheme({
+  config: {
+    initialColorMode: "dark",
+  },
+});
 
 const Layout = ({ children, session }) => {
   return (
@@ -16,7 +22,7 @@ const Layout = ({ children, session }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <SessionProvider session={session}>
           <Flex direction="column" minH="100svh">
             <Navbar />

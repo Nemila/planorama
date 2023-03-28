@@ -23,7 +23,12 @@ const EventDetails = () => {
         <Badge colorScheme="blue" mb={2}>
           En Attente
         </Badge>
-        <Heading size="md">Anniversaire de Lamine Diamoutene</Heading>
+        <Heading size="md" noOfLines={2}>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto
+          quod accusantium debitis, excepturi necessitatibus quibusdam magni
+          expedita fugit sequi nesciunt nulla repellat aspernatur ex?
+          Accusantium iure pariatur asperiores obcaecati cumque?
+        </Heading>
       </CardHeader>
 
       <CardFooter pt={2}>
@@ -34,7 +39,7 @@ const EventDetails = () => {
             leftIcon={<HiTrash size={18} />}
             size="sm"
           >
-            Supprimer
+            Effacer
           </Button>
           <Button
             href="/events/1"

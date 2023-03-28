@@ -14,6 +14,7 @@ import { HiSparkles } from "react-icons/hi2";
 
 const Navbar = () => {
   const { data: session } = useSession();
+
   if (session) {
     console.log(session);
   }

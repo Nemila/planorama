@@ -1,16 +1,15 @@
 import EventDetails from "@/components/EventDetails";
 import { Box, Container, GridItem, SimpleGrid } from "@chakra-ui/react";
-import { getSession } from "next-auth/react";
-import React from "react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]";
 
 export const getServerSideProps = async (context) => {
-  const session = await getSession(context);
+  const session = await getServerSession(context.req, context.res, authOptions);
 
   if (!session) {
     return {
       redirect: {
-        destination: "/api/auth/signin",
-        permanent: false,
+        destination: "/auth/signin",
       },
     };
   }
@@ -22,11 +21,11 @@ export const getServerSideProps = async (context) => {
   };
 };
 
-const Events = ({ user }) => {
+const Events = ({ session }) => {
   return (
     <Box py={4}>
       <Container maxW="container.xl">
-        <SimpleGrid columns={4} gap={4}>
+        <SimpleGrid columns={{ lg: 4, md: 2, sm: 1 }} gap={4}>
           <GridItem>
             <EventDetails />
           </GridItem>
