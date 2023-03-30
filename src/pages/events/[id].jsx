@@ -2,14 +2,28 @@ import PlaningBloc from "@/components/PlaningBloc";
 import TaskBloc from "@/components/TaskBloc";
 import {
   Badge,
+  Button,
   Container,
   Divider,
   Flex,
+  FormControl,
+  FormLabel,
   GridItem,
   Heading,
+  HStack,
+  Input,
   Link,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   SimpleGrid,
   Text,
+  Textarea,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { getSession } from "next-auth/react";
@@ -34,6 +48,8 @@ export const getServerSideProps = async (context) => {
 };
 
 const EventPage = ({ user }) => {
+  const { onClose, onOpen, isOpen } = useDisclosure();
+
   return (
     <Flex py={6}>
       <Container maxW="container.xl">
@@ -63,6 +79,15 @@ const EventPage = ({ user }) => {
               <Heading size="md">Planing de votre evenement</Heading>
               <Divider />
               <VStack spacing={4}>
+                <Button
+                  w="full"
+                  colorScheme="blue"
+                  variant="outline"
+                  onClick={onOpen}
+                >
+                  Ajouter un bloc
+                </Button>
+
                 <PlaningBloc />
                 <PlaningBloc />
               </VStack>
@@ -82,6 +107,49 @@ const EventPage = ({ user }) => {
           </GridItem>
         </SimpleGrid>
       </Container>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <Divider />
+          <ModalHeader>
+            <Heading size="md">Nouveau Bloc</Heading>
+            <ModalCloseButton />
+          </ModalHeader>
+
+          <Divider />
+
+          <ModalBody>
+            <VStack>
+              <HStack w="full">
+                <FormControl>
+                  <FormLabel>Debut</FormLabel>
+                  <Input type="time" />
+                </FormControl>
+
+                <FormControl>
+                  <FormLabel>Fin</FormLabel>
+                  <Input type="time" />
+                </FormControl>
+              </HStack>
+
+              <FormControl>
+                <FormLabel>Nom de l&apos;evenement</FormLabel>
+                <Input type="text" placeholder="Nom de l'evenement" />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Description</FormLabel>
+                <Textarea placeholder="Description de l'evenement"></Textarea>
+              </FormControl>
+            </VStack>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue">Ajouter</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Flex>
   );
 };

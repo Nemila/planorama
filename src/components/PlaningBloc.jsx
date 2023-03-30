@@ -13,6 +13,7 @@ import {
   FormControl,
   FormLabel,
   Heading,
+  HStack,
   IconButton,
   Input,
   Modal,
@@ -78,21 +79,25 @@ const PlaningBloc = () => {
         <ModalContent>
           <Divider />
           <ModalHeader>
-            <Heading size="sm">Modification</Heading>
+            <Heading size="md">Modification</Heading>
             <ModalCloseButton />
           </ModalHeader>
 
-          <ModalBody>
-            <SimpleGrid>
-              <FormControl>
-                <FormLabel>Heure de debut</FormLabel>
-                <Input type="time" />
-              </FormControl>
+          <Divider />
 
-              <FormControl>
-                <FormLabel>Heure de fin</FormLabel>
-                <Input type="time" />
-              </FormControl>
+          <ModalBody>
+            <VStack>
+              <HStack w="full">
+                <FormControl>
+                  <FormLabel>Debut</FormLabel>
+                  <Input type="time" />
+                </FormControl>
+
+                <FormControl>
+                  <FormLabel>Fin</FormLabel>
+                  <Input type="time" />
+                </FormControl>
+              </HStack>
 
               <FormControl>
                 <FormLabel>Nom de l&apos;evenement</FormLabel>
@@ -108,7 +113,7 @@ const PlaningBloc = () => {
                   laudantium libero natus maxime?
                 </Textarea>
               </FormControl>
-            </SimpleGrid>
+            </VStack>
           </ModalBody>
 
           <ModalFooter>
