@@ -12,16 +12,13 @@ import { getProviders, getSession, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { authOptions } from "../api/auth/[...nextauth]";
 
-import { FaGoogle, FaGithub } from "react-icons/fa";
-
 const SignIn = ({ providers }) => {
   const router = useRouter();
   const { error } = router.query;
-  console.log(error);
 
   return (
-    <Flex align="center" flex={1}>
-      <Container maxW="sm" bg="gray.900" p={6} rounded="lg">
+    <Flex align="center" flex={1} bg="gray.800">
+      <Container maxW="xs" bg="gray.900" p={6} rounded="lg">
         <VStack spacing={4}>
           {providers &&
             Object.values(providers).map((provider) => (
