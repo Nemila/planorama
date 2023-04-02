@@ -1,5 +1,6 @@
 import PlaningBloc from "@/components/PlaningBloc";
 import TaskBloc from "@/components/TaskBloc";
+import prisma from "@/lib/prisma";
 import {
   Badge,
   Button,
@@ -40,15 +41,24 @@ export const getServerSideProps = async (context) => {
     };
   }
 
+  const event = await prisma.event.findUnique({
+    where: {
+      id: parseInt(context.params.id),
+    },
+  });
+
   return {
     props: {
       session,
+      event: JSON.parse(JSON.stringify(event)),
     },
   };
 };
 
-const EventPage = ({ user }) => {
+const EventPage = ({ session, event }) => {
   const { onClose, onOpen, isOpen } = useDisclosure();
+  const startDate = new Date(event.startAt).toLocaleString();
+  const endDate = new Date(event.endAt).toLocaleString();
 
   return (
     <Flex py={6}>
@@ -56,21 +66,17 @@ const EventPage = ({ user }) => {
         <SimpleGrid columns={5} spacing={6}>
           <GridItem colSpan={3}>
             <VStack align="flex-start" spacing={2}>
-              <Heading size="md">Anniversaire de Lamine Diamoutene</Heading>
+              <Heading size="md">{event.name}</Heading>
               <Text>
-                Status de l&apos;evenement: <Badge>En Attente</Badge>
+                Status de l&apos;evenement: <Badge>{event.status}</Badge>
               </Text>
 
-              <Text>
-                Debut de l&apos;evenement: Samedi le 12 fevrier 2023 a 17h00
-              </Text>
+              <Text>Debut de l&apos;evenement: {startDate}</Text>
+
+              <Text>Fin de l&apos;evenement: {endDate}</Text>
 
               <Text>
-                Fin de l&apos;evenement: Samedi le 12 fevrier 2023 a 22h00
-              </Text>
-
-              <Text>
-                Address: Bamako, Sirako Cite BMS -{" "}
+                {event.address} -{" "}
                 <Link color="blue.200">Voir sur Google Map</Link>
               </Text>
             </VStack>

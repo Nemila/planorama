@@ -10,31 +10,29 @@ import {
   Input,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { getSession } from "next-auth/react";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
-export const getServerSideProps = async (context) => {
-  const session = await getSession(context);
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/api/auth/signin",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {
-      session,
-    },
-  };
-};
-
-const NewEventPage = ({ session }) => {
+const NewEventPage = ({}) => {
   const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const router = useRouter();
+  const { status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      router.push("/api/auth/signin");
+    },
+  });
+
+  const onSubmit = async (data) => {
+    try {
+      const res = await axios.post("http://localhost:3000/api/events", data);
+      console.log(res.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <Box py={6}>
@@ -63,7 +61,7 @@ const NewEventPage = ({ session }) => {
               <FormLabel>Debut de l&apos;evenement</FormLabel>
               <Input
                 type="datetime-local"
-                {...register("startDate", { required: true })}
+                {...register("startAt", { required: true })}
               />
             </FormControl>
           </GridItem>
@@ -73,7 +71,7 @@ const NewEventPage = ({ session }) => {
               <FormLabel>Fin de l&apos;evenement</FormLabel>
               <Input
                 type="datetime-local"
-                {...register("endDate", { required: true })}
+                {...register("endAt", { required: true })}
               />
             </FormControl>
           </GridItem>

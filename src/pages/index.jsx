@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  Container,
-  Flex,
-  Heading,
-  Stack,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 import Link from "next/link";
 
 export default function Home() {
