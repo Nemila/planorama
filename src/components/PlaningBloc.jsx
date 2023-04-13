@@ -32,26 +32,28 @@ import {
 import React from "react";
 import { HiPencilSquare, HiTrash } from "react-icons/hi2";
 
-const PlaningBloc = () => {
+const PlaningBloc = ({ bloc }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const {
     isOpen: isOpenAlert,
     onOpen: onOpenAlert,
     onClose: onCloseAlert,
   } = useDisclosure();
+
   const cancelRef = useRef();
+
+  const startTime = new Date(bloc.startAt).toLocaleTimeString();
+  const endTime = new Date(bloc.endAt).toLocaleTimeString();
 
   return (
     <>
       <VStack p={6} spacing={3} rounded="md" bg="gray.900" align="flex-start">
-        <Heading size="md">Titre du bloc</Heading>
-        <Heading size="lg">17:00 - 18h00</Heading>
-        <Text>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum labore
-          obcaecati at! Tempore vitae quasi commodi ducimus omnis, nihil sequi
-          sit maiores quidem nostrum consequuntur est laudantium libero natus
-          maxime?
-        </Text>
+        <Heading size="md">{bloc.title}</Heading>
+        <Heading size="lg">
+          {startTime} - {endTime}
+        </Heading>
+        <Text>{bloc.description}</Text>
 
         <ButtonGroup>
           <Button

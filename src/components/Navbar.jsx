@@ -10,79 +10,145 @@ import {
 } from "@chakra-ui/react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { HiSparkles } from "react-icons/hi2";
+import { HiSparkles, HiUser } from "react-icons/hi2";
+
+const navLinks = [
+  {
+    label: "Solutions",
+    link: "/solutions",
+  },
+  {
+    label: "Products",
+    link: "/products",
+  },
+  {
+    label: "Support",
+    link: "/support",
+  },
+  {
+    label: "Resources",
+    link: "/resources",
+  },
+];
 
 const Navbar = () => {
   const { data: session } = useSession();
 
   return (
-    <Box p={3} bg="gray.900">
+    <Box px={4} py={6} textColor="black">
       <Container maxW="container.xl">
-        <Flex align="center">
+        <Flex align="center" gap={8}>
           <Button
-            size="sm"
-            colorScheme="blue"
-            leftIcon={<HiSparkles size={18} />}
-            variant="ghost"
+            leftIcon={<HiSparkles size={24} />}
+            variant="link"
+            textColor="inherit"
             as={Link}
             href="/"
+            fontSize="lg"
+            _hover={{
+              textDecoration: "none",
+              color: "linkedin.500",
+            }}
           >
             Planorama
           </Button>
 
-          <HStack>
+          <HStack gap={6}>
             {session ? (
               <>
                 <Button
-                  size="sm"
-                  colorScheme="blue"
-                  variant="ghost"
+                  variant="link"
+                  textColor="inherit"
+                  _hover={{
+                    textDecoration: "none",
+                    color: "linkedin.500",
+                  }}
                   as={Link}
                   href="/events"
                 >
-                  Evenements
+                  Events
                 </Button>
+
                 <Button
-                  size="sm"
-                  colorScheme="blue"
-                  variant="ghost"
                   as={Link}
+                  textColor="inherit"
+                  _hover={{
+                    textDecoration: "none",
+                    color: "linkedin.500",
+                  }}
+                  variant="link"
                   href="/events/add"
                 >
-                  Creer un event
+                  New event
                 </Button>
+
                 <Button
-                  size="sm"
-                  colorScheme="blue"
-                  variant="ghost"
+                  variant="link"
+                  textColor="inherit"
+                  _hover={{
+                    textDecoration: "none",
+                    color: "linkedin.500",
+                  }}
                   onClick={signOut}
                 >
-                  Se deconnecter
+                  Sign out
                 </Button>
               </>
             ) : (
-              <Button
-                size="sm"
-                colorScheme="blue"
-                variant="ghost"
-                onClick={signIn}
-              >
-                Rejoindre
-              </Button>
+              <>
+                {navLinks.map((navLink) => (
+                  <Button
+                    key={navLink.link}
+                    href={navLink.link}
+                    as={Link}
+                    variant="link"
+                    textColor="inherit"
+                    _hover={{
+                      textDecoration: "none",
+                      color: "linkedin.500",
+                    }}
+                  >
+                    {navLink.label}
+                  </Button>
+                ))}
+              </>
             )}
           </HStack>
 
           <Spacer />
 
-          {session && (
-            <Button href="/profile" as={Link} variant="link" gap={4}>
-              <Text fontSize="sm">{session.user.email}</Text>
+          {session ? (
+            <Button
+              textColor="inherit"
+              href="/profile"
+              variant="link"
+              as={Link}
+              gap={4}
+              _hover={{
+                textDecoration: "none",
+                color: "linkedin.500",
+              }}
+            >
+              <Text>{session.user.name}</Text>
               <Avatar
                 src={session.user.image}
                 name={session.user.name}
                 w={8}
                 h={8}
               />
+            </Button>
+          ) : (
+            <Button
+              _hover={{
+                textDecoration: "none",
+                color: "linkedin.500",
+              }}
+              variant="link"
+              onClick={signIn}
+              textColor="inherit"
+              leftIcon={<HiUser size={24} />}
+            >
+              Log in
             </Button>
           )}
         </Flex>

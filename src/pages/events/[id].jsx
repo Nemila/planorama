@@ -28,6 +28,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { getSession } from "next-auth/react";
+import Events from ".";
 
 export const getServerSideProps = async (context) => {
   const session = await getSession(context);
@@ -44,6 +45,9 @@ export const getServerSideProps = async (context) => {
   const event = await prisma.event.findUnique({
     where: {
       id: parseInt(context.params.id),
+    },
+    include: {
+      blocs: true,
     },
   });
 
@@ -93,9 +97,9 @@ const EventPage = ({ session, event }) => {
                 >
                   Ajouter un bloc
                 </Button>
-
-                <PlaningBloc />
-                <PlaningBloc />
+                {event.blocs.map((bloc) => (
+                  <PlaningBloc key={bloc.id} bloc={bloc} />
+                ))}
               </VStack>
             </VStack>
           </GridItem>

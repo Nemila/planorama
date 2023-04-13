@@ -67,7 +67,7 @@ model Event {
   updated_at DateTime @updatedAt
   blocs      Bloc[]
   status     Status   @default(WAITING)
-  user       User?    @relation(fields: [userId], references: [id])
+  user       User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String?
 }
 
@@ -86,7 +86,7 @@ model Bloc {
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
   todos       Todo[]
-  event       Event    @relation(fields: [eventId], references: [id])
+  event       Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId     Int
 }
 

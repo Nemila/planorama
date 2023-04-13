@@ -4,20 +4,18 @@ import prisma from "@/lib/prisma";
 
 const handler = async (req, res) => {
   const session = await getServerSession(req, res, authOptions);
-  const data = req.body;
-
+  const { name, address, startAt, endAt } = req.body;
   const newEvent = await prisma.event.create({
     data: {
-      name: data.name,
-      address: data.address,
-      startAt: new Date(data.startAt),
-      endAt: new Date(data.endAt),
+      name,
+      address,
+      startAt: new Date(startAt),
+      endAt: new Date(endAt),
       user: {
         connect: { email: session.user.email },
       },
     },
   });
-
   res.status(201).json(newEvent);
 };
 

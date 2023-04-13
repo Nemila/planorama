@@ -2,10 +2,23 @@ import { ChakraProvider, extendTheme, Flex } from "@chakra-ui/react";
 import Head from "next/head";
 import Navbar from "./Navbar";
 import { SessionProvider } from "next-auth/react";
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+});
 
 const theme = extendTheme({
   config: {
-    initialColorMode: "dark",
+    initialColorMode: "light",
+  },
+  styles: {
+    global: {
+      body: {
+        fontFamily: poppins.style.fontFamily,
+      },
+    },
   },
 });
 
@@ -19,7 +32,6 @@ const Layout = ({ children, session }) => {
           content="Meilleur site de gestion d'evenement"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <ChakraProvider theme={theme}>

@@ -16,7 +16,12 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
 const NewEventPage = ({}) => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { isSubmitting },
+  } = useForm();
   const router = useRouter();
   const { status } = useSession({
     required: true,
@@ -32,6 +37,7 @@ const NewEventPage = ({}) => {
     } catch (error) {
       console.log(error.message);
     }
+    reset();
   };
 
   return (
@@ -88,7 +94,12 @@ const NewEventPage = ({}) => {
           </GridItem>
 
           <GridItem colSpan={2}>
-            <Button colorScheme="blue" w="full" type="submit">
+            <Button
+              colorScheme="blue"
+              w="full"
+              type="submit"
+              isLoading={isSubmitting}
+            >
               Creer
             </Button>
           </GridItem>
