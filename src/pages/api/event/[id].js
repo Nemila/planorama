@@ -1,22 +1,23 @@
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "./auth/[...nextauth]";
+import { authOptions } from "../auth/[...nextauth]";
 import prisma from "@/lib/prisma";
 
 const handler = async (req, res) => {
-  const session = await getServerSession(req, res, authOptions);
-  const { query, method } = req;
-  console.log(query.id);
-  const id = parseInt(query.id);
+  if (req.method !== "DELETE") {
+    return res.status(405).json({ message: "Method not allowed" });
+  }
 
-  switch (method) {
-    case "DELETE":
-      const event = await prisma.event.delete({
-        where: {
-          id,
-        },
-      });
-      res.status(200).json(event);
-      break;
+  const { id } = req.query;
+
+  try {
+    const response = await prisma.event.delete({
+      where: {
+        id: parseInt(id),
+      },
+    });
+    res.status(200).json(response.data);
+  } catch (error) {
+    res.status(403).json({ err: "Error occured while deleting a food item." });
   }
 };
 

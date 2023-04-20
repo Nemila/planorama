@@ -35,7 +35,7 @@ const Navbar = () => {
   const { data: session } = useSession();
 
   return (
-    <Box px={4} py={6} textColor="black">
+    <Box px={4} py={6} textColor="black" bg="white">
       <Container maxW="container.xl">
         <Flex align="center" gap={8}>
           <Button
@@ -54,89 +54,65 @@ const Navbar = () => {
           </Button>
 
           <HStack gap={6}>
-            {session ? (
-              <>
-                <Button
-                  variant="link"
-                  textColor="inherit"
-                  _hover={{
-                    textDecoration: "none",
-                    color: "linkedin.500",
-                  }}
-                  as={Link}
-                  href="/events"
-                >
-                  Events
-                </Button>
-
-                <Button
-                  as={Link}
-                  textColor="inherit"
-                  _hover={{
-                    textDecoration: "none",
-                    color: "linkedin.500",
-                  }}
-                  variant="link"
-                  href="/events/add"
-                >
-                  New event
-                </Button>
-
-                <Button
-                  variant="link"
-                  textColor="inherit"
-                  _hover={{
-                    textDecoration: "none",
-                    color: "linkedin.500",
-                  }}
-                  onClick={signOut}
-                >
-                  Sign out
-                </Button>
-              </>
-            ) : (
-              <>
-                {navLinks.map((navLink) => (
-                  <Button
-                    key={navLink.link}
-                    href={navLink.link}
-                    as={Link}
-                    variant="link"
-                    textColor="inherit"
-                    _hover={{
-                      textDecoration: "none",
-                      color: "linkedin.500",
-                    }}
-                  >
-                    {navLink.label}
-                  </Button>
-                ))}
-              </>
-            )}
+            {navLinks.map((navLink) => (
+              <Button
+                key={navLink.link}
+                href={navLink.link}
+                as={Link}
+                variant="link"
+                textColor="inherit"
+                _hover={{
+                  textDecoration: "none",
+                  color: "linkedin.500",
+                }}
+              >
+                {navLink.label}
+              </Button>
+            ))}
           </HStack>
 
           <Spacer />
 
           {session ? (
-            <Button
-              textColor="inherit"
-              href="/profile"
-              variant="link"
-              as={Link}
-              gap={4}
-              _hover={{
-                textDecoration: "none",
-                color: "linkedin.500",
-              }}
-            >
-              <Text>{session.user.name}</Text>
-              <Avatar
-                src={session.user.image}
-                name={session.user.name}
-                w={8}
-                h={8}
-              />
-            </Button>
+            <>
+              <Button
+                variant="link"
+                textColor="inherit"
+                _hover={{
+                  textDecoration: "none",
+                  color: "linkedin.500",
+                }}
+                as={Link}
+                href="/events"
+              >
+                Events
+              </Button>
+
+              <Button
+                textColor="inherit"
+                href="/profile"
+                variant="link"
+                as={Link}
+                gap={4}
+                _hover={{
+                  textDecoration: "none",
+                  color: "linkedin.500",
+                }}
+              >
+                <Text>Profile</Text>
+              </Button>
+              <Button
+                variant="link"
+                textColor="inherit"
+                _hover={{
+                  textDecoration: "none",
+                  color: "linkedin.500",
+                }}
+                onClick={signOut}
+              >
+                Sign out
+              </Button>
+            </>
           ) : (
             <Button
               _hover={{

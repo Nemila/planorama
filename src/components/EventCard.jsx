@@ -8,35 +8,77 @@ import {
   Badge,
   Button,
   ButtonGroup,
-  Card,
-  CardFooter,
-  CardHeader,
-  Heading,
+  Flex,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import axios from "axios";
 import Link from "next/link";
 import { useRef } from "react";
-import { HiCalendarDays, HiTrash } from "react-icons/hi2";
 
-const EventDetails = ({ event }) => {
+const EventCard = ({ event }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const cancelRef = useRef();
 
+  let color = "gray";
+  if (event.status === "WAITING") {
+    color = "gray";
+  }
+  if (event.status === "ONGOING") {
+    color = "red";
+  }
+  if (event.status === "FINISHED") {
+    color = "green";
+  }
+
   const handleEventDelete = async () => {
-    try {
-      const deletedEvent = await axios.delete(
-        `http://locahost:3000/api/event/${event.id}`
-      );
-      console.log(deletedEvent);
-    } catch (error) {
-      console.log(error.message);
-    }
+    await axios.delete(`http://localhost:3000/api/event/${event.id}`);
+    window.location.reload();
   };
 
   return (
     <>
-      <Card>
+      <Flex
+        minW="xs"
+        flex={1}
+        p={4}
+        gap={2}
+        bg="white"
+        rounded="md"
+        border="1px"
+        borderColor="gray.300"
+        _hover={{
+          shadow: "md",
+        }}
+        direction="column"
+        alignItems="flex-start"
+        transition="200ms ease all"
+      >
+        <Badge colorScheme={color} variant="outline">
+          {event.status}
+        </Badge>
+
+        <Text fontSize="sm" noOfLines={1}>
+          {event.name}
+        </Text>
+
+        <ButtonGroup>
+          <Button w="full" colorScheme="red" size="sm" onClick={onOpen}>
+            Delete
+          </Button>
+
+          <Button
+            href={`/events/${event.id}`}
+            as={Link}
+            w="full"
+            colorScheme="blue"
+            size="sm"
+          >
+            Details
+          </Button>
+        </ButtonGroup>
+      </Flex>
+      {/* <Card>
         <CardHeader pb={2}>
           <Badge colorScheme="blue" mb={2}>
             {event.status}
@@ -70,7 +112,7 @@ const EventDetails = ({ event }) => {
             </Button>
           </ButtonGroup>
         </CardFooter>
-      </Card>
+      </Card> */}
 
       <AlertDialog
         isOpen={isOpen}
@@ -93,7 +135,15 @@ const EventDetails = ({ event }) => {
                 Annuler
               </Button>
 
-              <Button colorScheme="red" onClick={handleEventDelete} ml={3}>
+              <Button
+                ref={cancelRef}
+                colorScheme="red"
+                onClick={() => {
+                  onClose();
+                  handleEventDelete();
+                }}
+                ml={3}
+              >
                 Effacer
               </Button>
             </AlertDialogFooter>
@@ -104,4 +154,4 @@ const EventDetails = ({ event }) => {
   );
 };
 
-export default EventDetails;
+export default EventCard;
