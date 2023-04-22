@@ -57,9 +57,9 @@ const Events = ({ events }) => {
     // </Box>
 
     <div className="container mx-auto p-6">
-      <div className="flex flex-wrap gap-8">
-        <div className="flex flex-1 flex-col gap-4">
-          <h2 className="text-2xl font-semibold">Your events list</h2>
+      <div className="flex flex-wrap items-start gap-8">
+        <div className="flex-1">
+          <h2 className="mb-4 text-2xl font-semibold">Your events list</h2>
           <div className="flex flex-wrap gap-4">
             {events.length > 0 ? (
               events.map((event) => <EventCard key={event.id} event={event} />)

@@ -98,6 +98,13 @@ const NewEventForm = () => {
         ></textarea>
       </div>
 
+      <div className="form-control col-span-2">
+        <label className="label">
+          <span className="label-text">Pick an image</span>
+        </label>
+        <input type="file" className="file-input-bordered file-input" />
+      </div>
+
       <button
         type="submit"
         className={`btn-primary btn col-span-2 w-full ${

@@ -1,17 +1,6 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Container,
-  Flex,
-  HStack,
-  Spacer,
-  Text,
-} from "@chakra-ui/react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { HiSparkles, HiUser } from "react-icons/hi2";
 
 const navLinks = [
   {
@@ -135,17 +124,19 @@ const Navbar = () => {
     <div className="bg-base-100">
       <div className="container navbar mx-auto">
         <div className="flex-1">
-          <a className="btn-ghost btn text-xl normal-case">Planorama</a>
+          <Link href="/" className="btn-ghost btn text-xl normal-case">
+            Planorama
+          </Link>
         </div>
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1">
-            <li>
+            {/* <li>
               <a>Resources</a>
             </li>
 
             <li>
               <a>Solutions</a>
-            </li>
+            </li> */}
 
             <li>
               <a>About</a>
@@ -177,7 +168,9 @@ const Navbar = () => {
                 className="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-base-100 p-2 shadow"
               >
                 <li>
-                  <a className="justify-between">Events</a>
+                  <Link className="justify-between" href="/events">
+                    Events
+                  </Link>
                 </li>
                 <li>
                   <a onClick={signOut}>Logout</a>

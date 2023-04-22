@@ -15,7 +15,7 @@ const EventCard = ({ event }) => {
 
   return (
     <>
-      <div className="min-w-sm card flex-1 bg-base-100 shadow-md">
+      <div className="card min-w-[300px] flex-1 bg-base-100 shadow-md">
         <div className="card-body">
           <div
             className={`badge ${
@@ -27,7 +27,7 @@ const EventCard = ({ event }) => {
           <h2 className="card-title line-clamp-1">{event.name}</h2>
           <p className="line-clamp-2">{event.description}</p>
           <div className="card-actions justify-end">
-            <Link className="btn" href={`/events/${event.id}`}>
+            <Link className="btn-primary btn" href={`/events/${event.id}`}>
               Details
             </Link>
             <label htmlFor="my-modal" className="btn">
