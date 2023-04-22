@@ -10,60 +10,57 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
-import React from "react";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
 const NewEventForm = () => {
+  const router = useRouter();
   const toast = useToast();
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { isSubmitting, isSubmitSuccessful },
+    formState: { isSubmitting },
   } = useForm();
 
   const onSubmit = async (data) => {
-    try {
-      const today = Date.now();
-      const startAt = new Date(data.startAt).getTime();
-      const endAt = new Date(data.endAt).getTime();
+    const today = Date.now();
+    const startAt = new Date(data.startAt).getTime();
+    const endAt = new Date(data.endAt).getTime();
 
-      if (startAt < today || endAt < today) {
-        return toast({
-          title: "An error occured.",
-          description: "Start and end day can't be in the past.",
-          status: "error",
-          duration: 9000,
-          isClosable: true,
-        });
-      }
+    if (startAt < today || endAt < today) {
+      return toast({
+        title: "An error occured.",
+        description: "Start and end day can't be in the past.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
 
-      if (startAt >= endAt) {
-        return toast({
-          title: "An error occured.",
-          description: "Start date can't be after the end date.",
-          status: "error",
-          duration: 9000,
-          isClosable: true,
-        });
-      }
+    if (startAt >= endAt) {
+      return toast({
+        title: "An error occured.",
+        description: "Start date can't be after the end date.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
 
-      const res = await axios.post("http://localhost:3000/api/addEvent", data);
+    const res = await axios.post("http://localhost:3000/api/addEvent", data);
 
-      if (res.data) {
-        toast({
-          title: "New event created.",
-          description: "Your event was successfully created.",
-          status: "success",
-          duration: 9000,
-          isClosable: true,
-        });
-        window.location.reload();
-        reset();
-      }
-    } catch (error) {
-      console.log(error.message);
+    if (res.data) {
+      toast({
+        title: "New event created.",
+        description: "Your event was successfully created.",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+      reset();
+      router.replace(router.asPath);
     }
   };
 
@@ -122,21 +119,6 @@ const NewEventForm = () => {
           />
           <FormHelperText>
             Where is the event going to take place?
-          </FormHelperText>
-        </FormControl>
-      </GridItem>
-
-      <GridItem colSpan={2}>
-        <FormControl>
-          <FormLabel>Template</FormLabel>
-          <Select>
-            <option value="">Select</option>
-            <option value="">Blank</option>
-            <option value="">Birthday</option>
-            <option value="">Conference</option>
-          </Select>
-          <FormHelperText>
-            Templates come with predefined tasks that you can edit
           </FormHelperText>
         </FormControl>
       </GridItem>

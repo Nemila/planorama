@@ -9,20 +9,25 @@ const handler = async (req, res) => {
     res.status(403).json({ err: "POST requests only" });
   }
 
-  const { name, address, startAt, endAt } = req.body;
-  const newEvent = await prisma.event.create({
-    data: {
-      name,
-      address,
-      startAt: new Date(startAt),
-      endAt: new Date(endAt),
-      user: {
-        connect: { email: session.user.email },
+  try {
+    const { name, address, startAt, endAt } = req.body;
+    const newEvent = await prisma.event.create({
+      data: {
+        name,
+        address,
+        startAt: new Date(startAt),
+        endAt: new Date(endAt),
+        user: {
+          connect: { email: session.user.email },
+        },
       },
-    },
-  });
+    });
 
-  res.status(201).json(newEvent);
+    res.status(201).json(newEvent);
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).send(error.message);
+  }
 };
 
 export default handler;

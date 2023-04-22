@@ -14,9 +14,11 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useRef } from "react";
 
 const EventCard = ({ event }) => {
+  const router = useRouter();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const cancelRef = useRef();
 
@@ -33,7 +35,7 @@ const EventCard = ({ event }) => {
 
   const handleEventDelete = async () => {
     await axios.delete(`http://localhost:3000/api/event/${event.id}`);
-    window.location.reload();
+    router.replace(router.asPath);
   };
 
   return (
@@ -42,23 +44,19 @@ const EventCard = ({ event }) => {
         minW="xs"
         flex={1}
         p={4}
-        gap={2}
+        gap={3}
         bg="white"
         rounded="md"
         border="1px"
         borderColor="gray.300"
-        _hover={{
-          shadow: "md",
-        }}
-        direction="column"
         alignItems="flex-start"
-        transition="200ms ease all"
+        direction="column"
       >
         <Badge colorScheme={color} variant="outline">
           {event.status}
         </Badge>
 
-        <Text fontSize="sm" noOfLines={1}>
+        <Text fontSize="lg" noOfLines={1}>
           {event.name}
         </Text>
 
@@ -78,41 +76,6 @@ const EventCard = ({ event }) => {
           </Button>
         </ButtonGroup>
       </Flex>
-      {/* <Card>
-        <CardHeader pb={2}>
-          <Badge colorScheme="blue" mb={2}>
-            {event.status}
-          </Badge>
-          <Heading size="md" noOfLines={2}>
-            {event.name}
-          </Heading>
-        </CardHeader>
-
-        <CardFooter pt={2}>
-          <ButtonGroup>
-            <Button
-              w="full"
-              colorScheme="red"
-              leftIcon={<HiTrash size={18} />}
-              size="sm"
-              onClick={onOpen}
-            >
-              Effacer
-            </Button>
-
-            <Button
-              href={`/events/${event.id}`}
-              as={Link}
-              w="full"
-              colorScheme="blue"
-              leftIcon={<HiCalendarDays size={18} />}
-              size="sm"
-            >
-              Planifier
-            </Button>
-          </ButtonGroup>
-        </CardFooter>
-      </Card> */}
 
       <AlertDialog
         isOpen={isOpen}

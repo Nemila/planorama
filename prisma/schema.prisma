@@ -58,17 +58,19 @@ model VerificationToken {
 }
 
 model Event {
-  id         Int      @id @default(autoincrement())
+  id         Int        @id @default(autoincrement())
   name       String
   startAt    DateTime
   endAt      DateTime
   address    String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  blocs      Bloc[]
-  status     Status   @default(WAITING)
-  user       User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
   userId     String?
+  image      String?
+  blocs      Bloc[]
+  reminders  Reminder[]
+  status     Status     @default(WAITING)
+  user       User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum Status {
@@ -85,16 +87,23 @@ model Bloc {
   description String
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
+  eventId     Int
   todos       Todo[]
   event       Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  eventId     Int
 }
 
 model Todo {
   id         Int      @id @default(autoincrement())
   label      String
-  bloc       Bloc     @relation(fields: [blocId], references: [id])
   blocId     Int
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  bloc       Bloc     @relation(fields: [blocId], references: [id])
+}
+
+model Reminder {
+  id      Int      @id @default(autoincrement())
+  eventId Int
+  event   Event    @relation(fields: [eventId], references: [id])
+  period  DateTime
 }
