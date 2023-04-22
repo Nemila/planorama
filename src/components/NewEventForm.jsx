@@ -1,7 +1,9 @@
+import supabase from "@/lib/supabase";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { v4 } from "uuid";
 
 const NewEventForm = () => {
   const router = useRouter();
@@ -26,7 +28,26 @@ const NewEventForm = () => {
       });
     }
 
-    const res = await axios.post("http://localhost:3000/api/addEvent", data);
+    // image upload
+    const formData = new FormData();
+    formData.append("file", data.image[0]);
+    const fileName = data.name.toLowerCase().split(" ").join("_") + v4();
+    const { data: imageData, error } = await supabase.storage
+      .from("events")
+      .upload(fileName, formData, {
+        cacheControl: "3600",
+        upsert: false,
+      });
+    if (error) {
+      console.log(error);
+    }
+    console.log(imageData.path);
+
+    const res = await axios.post("http://localhost:3000/api/addEvent", {
+      ...data,
+      image: imageData.path,
+    });
+
     if (res.data) {
       reset();
       toast("Event created with success.");
@@ -102,7 +123,11 @@ const NewEventForm = () => {
         <label className="label">
           <span className="label-text">Pick an image</span>
         </label>
-        <input type="file" className="file-input-bordered file-input" />
+        <input
+          type="file"
+          className="file-input-bordered file-input"
+          {...register("image")}
+        />
       </div>
 
       <button
@@ -118,3 +143,7 @@ const NewEventForm = () => {
 };
 
 export default NewEventForm;
+
+{
+  /* <img src="[supabase_url]/storage/v1/object/public/[bucket name]/[path to your image]" /> */
+}
