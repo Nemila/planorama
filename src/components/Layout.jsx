@@ -1,27 +1,12 @@
+import useLoading from "@/hooks/useLoading";
 import { ChakraProvider, extendTheme, Flex, Spinner } from "@chakra-ui/react";
+import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
 import Navbar from "./Navbar";
-import { SessionProvider } from "next-auth/react";
-import { Poppins } from "next/font/google";
-import useLoading from "@/hooks/useLoading";
 
-const poppins = Poppins({
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  subsets: ["latin"],
-});
-
-const theme = extendTheme({
-  config: {
-    initialColorMode: "light",
-  },
-  styles: {
-    global: {
-      body: {
-        fontFamily: poppins.style.fontFamily,
-      },
-    },
-  },
-});
+// react-toastify
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const Layout = ({ children, session }) => {
   const { isLoading } = useLoading();
@@ -31,15 +16,16 @@ const Layout = ({ children, session }) => {
         <title>Planorama</title>
         <meta
           name="description"
-          content="Meilleur site de gestion d'evenement"
+          content="Plan your next event with ease. Our event management website offers a complete solution for organizing, promoting, and executing successful events. From corporate conferences to weddings and birthdays, our platform provides all the tools you need to create an unforgettable experience for your attendees. Start planning today and take the stress out of event planning!"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <ChakraProvider theme={theme}>
+      <ChakraProvider>
         <SessionProvider session={session}>
           <Flex direction="column" minH="100svh" bg="gray.100">
             <Navbar />
+            <ToastContainer />
             {isLoading && <Spinner alignSelf="center" mt={12} />}
             {!isLoading && children}
           </Flex>

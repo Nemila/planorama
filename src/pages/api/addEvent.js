@@ -10,11 +10,10 @@ const handler = async (req, res) => {
   }
 
   try {
-    const { name, address, startAt, endAt } = req.body;
+    const { startAt, endAt } = req.body;
     const newEvent = await prisma.event.create({
       data: {
-        name,
-        address,
+        ...req.body,
         startAt: new Date(startAt),
         endAt: new Date(endAt),
         user: {

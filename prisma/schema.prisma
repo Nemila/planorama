@@ -58,19 +58,20 @@ model VerificationToken {
 }
 
 model Event {
-  id         Int        @id @default(autoincrement())
-  name       String
-  startAt    DateTime
-  endAt      DateTime
-  address    String
-  created_at DateTime   @default(now())
-  updated_at DateTime   @updatedAt
-  userId     String?
-  image      String?
-  blocs      Bloc[]
-  reminders  Reminder[]
-  status     Status     @default(WAITING)
-  user       User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          Int        @id @default(autoincrement())
+  name        String
+  description String?
+  startAt     DateTime
+  endAt       DateTime
+  location    String
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+  userId      String?
+  image       String?
+  blocs       Bloc[]
+  reminders   Reminder[]
+  status      Status     @default(WAITING)
+  user        User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum Status {

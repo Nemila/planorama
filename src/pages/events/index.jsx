@@ -1,7 +1,6 @@
 import EventCard from "@/components/EventCard";
 import NewEventForm from "@/components/NewEventForm";
 import prisma from "@/lib/prisma";
-import { Box, Container, Flex, Text } from "@chakra-ui/react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]";
 
@@ -37,25 +36,42 @@ export const getServerSideProps = async (context) => {
 
 const Events = ({ events }) => {
   return (
-    <Box py={4}>
-      <Container maxW="container.xl">
-        <Flex gap={4} flexWrap="wrap-reverse" align="flex-end">
-          <Flex flex={2} flexWrap="wrap" gap={4}>
-            <Text w="full" fontSize="xl" fontWeight="medium">
-              Your events list
-            </Text>
+    // <Box py={4}>
+    //   <Container maxW="container.xl">
+    //     <Flex gap={4} flexWrap="wrap-reverse" align="flex-end">
+    //       <Flex flex={2} flexWrap="wrap" gap={4}>
+    //         <Text w="full" fontSize="xl" fontWeight="medium">
+    //           Your events list
+    //         </Text>
 
+    //         {events.length > 0 ? (
+    //           events.map((event) => <EventCard key={event.id} event={event} />)
+    //         ) : (
+    //           <Text>There is nothing here yet.</Text>
+    //         )}
+    //       </Flex>
+
+    //       <NewEventForm />
+    //     </Flex>
+    //   </Container>
+    // </Box>
+
+    <div className="container mx-auto p-6">
+      <div className="flex flex-wrap gap-8">
+        <div className="flex flex-1 flex-col gap-4">
+          <h2 className="text-2xl font-semibold">Your events list</h2>
+          <div className="flex flex-wrap gap-4">
             {events.length > 0 ? (
               events.map((event) => <EventCard key={event.id} event={event} />)
             ) : (
-              <Text>There is nothing here yet.</Text>
+              <p>There is nothing here yet.</p>
             )}
-          </Flex>
+          </div>
+        </div>
 
-          <NewEventForm />
-        </Flex>
-      </Container>
-    </Box>
+        <NewEventForm />
+      </div>
+    </div>
   );
 };
 

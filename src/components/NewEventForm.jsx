@@ -1,21 +1,11 @@
-import {
-  Button,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  GridItem,
-  Input,
-  Select,
-  SimpleGrid,
-  useToast,
-} from "@chakra-ui/react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const NewEventForm = () => {
   const router = useRouter();
-  const toast = useToast();
+  // const toast = useToast();
 
   const {
     register,
@@ -25,115 +15,98 @@ const NewEventForm = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const today = Date.now();
+    // date validation
+    const today = new Date().getTime();
     const startAt = new Date(data.startAt).getTime();
     const endAt = new Date(data.endAt).getTime();
-
-    if (startAt < today || endAt < today) {
-      return toast({
-        title: "An error occured.",
-        description: "Start and end day can't be in the past.",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-    }
-
-    if (startAt >= endAt) {
-      return toast({
-        title: "An error occured.",
-        description: "Start date can't be after the end date.",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
+    const isDateError = startAt < today || endAt < today || startAt >= endAt;
+    if (isDateError) {
+      return toast("Invalid date range.", {
+        type: "error",
       });
     }
 
     const res = await axios.post("http://localhost:3000/api/addEvent", data);
-
     if (res.data) {
-      toast({
-        title: "New event created.",
-        description: "Your event was successfully created.",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
       reset();
+      toast("Event created with success.");
       router.replace(router.asPath);
     }
   };
 
   return (
-    <SimpleGrid
-      p={4}
-      flex={1}
-      gap={4}
-      columns={2}
-      as="form"
-      bg="white"
-      border="1px"
-      borderColor="gray.300"
-      rounded="md"
-      minW="xs"
+    <form
+      className="grid max-w-md grid-cols-2 gap-4"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <GridItem colSpan={2}>
-        <FormControl>
-          <FormLabel>Name</FormLabel>
-          <Input
-            placeholder="Type here..."
-            {...register("name", { required: true })}
-          />
-          <FormHelperText>Provide the name of your event</FormHelperText>
-        </FormControl>
-      </GridItem>
+      <div className="form-control col-span-2">
+        <label className="label">
+          <span className="label-text">Name</span>
+        </label>
+        <input
+          type="text"
+          className="input-bordered input"
+          placeholder="Type here..."
+          {...register("name", { required: true })}
+        />
+      </div>
 
-      <GridItem>
-        <FormControl>
-          <FormLabel>Start Date</FormLabel>
-          <Input
-            type="datetime-local"
-            {...register("startAt", { required: true })}
-          />
-        </FormControl>
-      </GridItem>
+      <div className="form-control">
+        <label className="label">
+          <span className="label-text">From</span>
+        </label>
+        <input
+          type="datetime-local"
+          className="input-bordered input"
+          placeholder="Type here..."
+          {...register("startAt", { required: true })}
+        />
+      </div>
 
-      <GridItem>
-        <FormControl>
-          <FormLabel>End Date</FormLabel>
-          <Input
-            type="datetime-local"
-            {...register("endAt", { required: true })}
-          />
-        </FormControl>
-      </GridItem>
+      <div className="form-control">
+        <label className="label">
+          <span className="label-text">To</span>
+        </label>
+        <input
+          type="datetime-local"
+          className="input-bordered input"
+          placeholder="Type here..."
+          {...register("endAt", { required: true })}
+        />
+      </div>
 
-      <GridItem colSpan={2}>
-        <FormControl>
-          <FormLabel>Location</FormLabel>
-          <Input
-            type="text"
-            placeholder="Type here..."
-            {...register("address", { required: true })}
-          />
-          <FormHelperText>
-            Where is the event going to take place?
-          </FormHelperText>
-        </FormControl>
-      </GridItem>
+      <div className="form-control col-span-2">
+        <label className="label">
+          <span className="label-text">Location</span>
+        </label>
+        <input
+          type="text"
+          className="input-bordered input"
+          placeholder="Type here..."
+          {...register("location", { required: true })}
+        />
+      </div>
 
-      <GridItem colSpan={2}>
-        <Button
-          w="full"
-          type="submit"
-          colorScheme="blue"
-          isLoading={isSubmitting}
-        >
-          Create Event
-        </Button>
-      </GridItem>
-    </SimpleGrid>
+      <div className="form-control col-span-2">
+        <label className="label">
+          <span className="label-text">Description</span>
+        </label>
+        <textarea
+          {...register("description", { required: true })}
+          className="textarea-bordered textarea h-24"
+          placeholder="Something about the event..."
+        ></textarea>
+      </div>
+
+      <button
+        type="submit"
+        className={`btn-primary btn col-span-2 w-full ${
+          isSubmitting && "loading"
+        }`}
+      >
+        Create Event
+      </button>
+    </form>
   );
 };
 
