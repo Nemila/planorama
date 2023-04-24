@@ -1,9 +1,11 @@
-OBSERVATIONS AVANT CONNEXION FONCTIONNALITÉ
+## OBSERVATIONS AVANT CONNEXION FONCTIONNALITÉ
+
 ⁃ [x] Ajoutez une page a propos
 ⁃ [x] Permette à n’importe quel compte de se connecter ( gmail, Yahoo, Hotmail…)
 ⁃ [ ] Permettre une connection via les réseaux sociaux ( Fbk, Instagram, Twitter…)
 
-OBSERVATIONS APRÈS LA CONNEXION
+## OBSERVATIONS APRÈS LA CONNEXION
+
 ⁃ [x] Ajoutez des contrôles de saisie a chaque champs(ex: la date de début l’événement doit être supérieur ou égal à la date du jour et la date de fin aussi l’être)
 ⁃ [x] Avoir des photos en fonction de chaque événements
 ⁃ [x] Combiner (dans la page ÉVÉNEMENT on doit avoir AFFICHER ÉVENT et CRÉER ÉVENT)
@@ -14,11 +16,13 @@ OBSERVATIONS APRÈS LA CONNEXION
 ⁃ [x] Couleurs joyeuse
 ⁃ [x] Ne pas mélanger le français et l’anglais
 
-OBSERVATIONS IMPORTANTES
+## OBSERVATIONS IMPORTANTES
+
 ⁃ [ ] Insuffisances de fonctionnalités
 ⁃ [ ] Ajoutée plus de fonctionnalités
 
 - [ ] Augmenter la vitesse en changeant de methode de fetch
 
-CE QU’ON PEUT FAIRE
+## CE QU’ON PEUT FAIRE
+
 ⁃ [x] Ajouter un système de rappel avec calendrier
