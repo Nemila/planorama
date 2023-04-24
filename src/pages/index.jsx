@@ -1,16 +1,15 @@
 import EventTypes from "@/layouts/EventTypes";
-import Footer from "@/layouts/Footer";
 import Hero from "@/layouts/Hero";
 import Services from "@/layouts/Services";
-import { Box } from "@chakra-ui/react";
+import Video from "@/layouts/Video";
 
 export default function Home() {
   return (
-    <Box>
+    <main>
       <Hero />
-      <EventTypes />
+      <Video />
       <Services />
-      {/* <Footer /> */}
-    </Box>
+      <EventTypes />
+    </main>
   );
 }

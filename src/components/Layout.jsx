@@ -1,12 +1,14 @@
 import useLoading from "@/hooks/useLoading";
-import { ChakraProvider, extendTheme, Flex, Spinner } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
 import Navbar from "./Navbar";
 
 // react-toastify
-import "react-toastify/dist/ReactToastify.css";
+import Footer from "@/layouts/Footer";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Spinner from "./Spinner";
 
 const Layout = ({ children, session }) => {
   const { isLoading } = useLoading();
@@ -21,16 +23,19 @@ const Layout = ({ children, session }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <ChakraProvider>
-        <SessionProvider session={session}>
-          <Flex direction="column" minH="100svh" bg="gray.100">
-            <Navbar />
-            <ToastContainer />
-            {isLoading && <Spinner alignSelf="center" mt={12} />}
-            {!isLoading && children}
-          </Flex>
-        </SessionProvider>
-      </ChakraProvider>
+      <SessionProvider session={session}>
+        <div
+          className="flex min-h-screen flex-col overflow-x-hidden bg-base-200"
+          data-theme="light"
+        >
+          <Navbar />
+          <ToastContainer />
+          {isLoading && <Spinner />}
+          {!isLoading && children}
+        </div>
+
+        <Footer />
+      </SessionProvider>
     </>
   );
 };

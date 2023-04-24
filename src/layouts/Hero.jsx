@@ -1,43 +1,26 @@
-import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
-import Image from "next/image";
-import React from "react";
-import Link from "next/link";
-
 const Hero = () => {
   return (
-    <Flex p={4} justifyContent="center" bg="linkedin.500">
-      <Flex
-        maxW="lg"
-        direction="column"
-        alignItems="flex-start"
-        justifyContent="center"
-        textColor="white"
-        gap={4}
+    <>
+      <div
+        className="hero min-h-screen"
+        style={{
+          backgroundImage: `url('https://images.unsplash.com/photo-1471967183320-ee018f6e114a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80')`,
+        }}
       >
-        <Heading>Your go-to platform for event management.</Heading>
-
-        <Text fontSize="lg">
-          From planning to execution, we&apos;ve got you covered.
-        </Text>
-
-        <Button as={Link} href="/events" size="lg" textColor="linkedin.500">
-          Explore the platform
-        </Button>
-      </Flex>
-
-      <Box>
-        <Image
-          sx={{
-            objectFit: "contains",
-            w: "100%",
-          }}
-          src="/illustration.svg"
-          alt="planner illus"
-          width={450}
-          height={900}
-        />
-      </Box>
-    </Flex>
+        <div className="hero-overlay bg-opacity-60"></div>
+        <div className="hero-content text-center text-neutral-content">
+          <div className="max-w-md">
+            <h1 className="mb-5 text-5xl font-bold">Hello there</h1>
+            <p className="mb-5">
+              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
+              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
+              et a id nisi.
+            </p>
+            <button className="btn-primary btn">Get Started</button>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

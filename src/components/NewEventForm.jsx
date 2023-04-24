@@ -57,9 +57,11 @@ const NewEventForm = () => {
 
   return (
     <form
-      className="grid max-w-md grid-cols-2 gap-4"
+      className="grid max-w-md grid-cols-2 gap-2"
       onSubmit={handleSubmit(onSubmit)}
     >
+      <h2 className="col-span-2 text-2xl font-semibold">Create an event</h2>
+      
       <div className="form-control col-span-2">
         <label className="label">
           <span className="label-text">Name</span>

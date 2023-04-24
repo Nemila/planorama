@@ -1,6 +1,7 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { HiBars2, HiFire, HiStar } from "react-icons/hi2";
 
 const navLinks = [
   {
@@ -25,111 +26,21 @@ const Navbar = () => {
   const { data: session } = useSession();
 
   return (
-    // <Box px={4} py={6} textColor="black" bg="white">
-    //   <Container maxW="container.xl">
-    //     <Flex align="center" gap={8}>
-    //       <Button
-    //         leftIcon={<HiSparkles size={24} />}
-    //         variant="link"
-    //         textColor="inherit"
-    //         as={Link}
-    //         href="/"
-    //         fontSize="lg"
-    //         _hover={{
-    //           textDecoration: "none",
-    //           color: "linkedin.500",
-    //         }}
-    //       >
-    //         Planorama
-    //       </Button>
-
-    //       <HStack gap={6}>
-    //         {navLinks.map((navLink) => (
-    //           <Button
-    //             key={navLink.link}
-    //             href={navLink.link}
-    //             as={Link}
-    //             variant="link"
-    //             textColor="inherit"
-    //             _hover={{
-    //               textDecoration: "none",
-    //               color: "linkedin.500",
-    //             }}
-    //           >
-    //             {navLink.label}
-    //           </Button>
-    //         ))}
-    //       </HStack>
-
-    //       <Spacer />
-
-    //       {session ? (
-    //         <>
-    //           <Button
-    //             variant="link"
-    //             textColor="inherit"
-    //             _hover={{
-    //               textDecoration: "none",
-    //               color: "linkedin.500",
-    //             }}
-    //             as={Link}
-    //             href="/events"
-    //           >
-    //             Events
-    //           </Button>
-
-    //           <Button
-    //             textColor="inherit"
-    //             href="/profile"
-    //             variant="link"
-    //             as={Link}
-    //             gap={4}
-    //             _hover={{
-    //               textDecoration: "none",
-    //               color: "linkedin.500",
-    //             }}
-    //           >
-    //             <Text>Profile</Text>
-    //           </Button>
-    //           <Button
-    //             variant="link"
-    //             textColor="inherit"
-    //             _hover={{
-    //               textDecoration: "none",
-    //               color: "linkedin.500",
-    //             }}
-    //             onClick={signOut}
-    //           >
-    //             Sign out
-    //           </Button>
-    //         </>
-    //       ) : (
-    //         <Button
-    //           _hover={{
-    //             textDecoration: "none",
-    //             color: "linkedin.500",
-    //           }}
-    //           variant="link"
-    //           onClick={signIn}
-    //           textColor="inherit"
-    //           leftIcon={<HiUser size={24} />}
-    //         >
-    //           Log in
-    //         </Button>
-    //       )}
-    //     </Flex>
-    //   </Container>
-    // </Box>
-
     <div className="bg-base-100">
       <div className="container navbar mx-auto">
+        {/* Logo */}
         <div className="flex-1">
-          <Link href="/" className="btn-ghost btn text-xl normal-case">
+          <Link
+            href="/"
+            className="btn-link btn gap-2 text-xl normal-case no-underline"
+          >
+            <HiStar className="text-2xl" />
             Planorama
           </Link>
         </div>
-        <div className="flex-none">
-          <ul className="menu menu-horizontal px-1">
+
+        <div className="hidden flex-none space-x-2 md:flex">
+          <ul className="menu menu-horizontal space-x-2 px-1">
             {/* <li>
               <a>Resources</a>
             </li>
@@ -142,7 +53,15 @@ const Navbar = () => {
               <a>About</a>
             </li>
 
-            {!session?.user && (
+            {session?.user ? (
+              <>
+                <li>
+                  <Link className="justify-between" href="/events">
+                    Events
+                  </Link>
+                </li>
+              </>
+            ) : (
               <>
                 <li>
                   <a onClick={signIn}>Sign In</a>
@@ -163,26 +82,56 @@ const Navbar = () => {
                   />
                 </div>
               </label>
+
               <ul
                 tabIndex={0}
                 className="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-base-100 p-2 shadow"
               >
                 <li>
-                  <Link className="justify-between" href="/calendar">
-                    Calendar
-                  </Link>
+                  <Link href="/calendar">Calendar</Link>
                 </li>
                 <li>
-                  <Link className="justify-between" href="/events">
-                    Events
-                  </Link>
-                </li>
-                <li>
-                  <a onClick={signOut}>Logout</a>
+                  <a onClick={signOut}>Log out</a>
                 </li>
               </ul>
             </div>
           )}
+        </div>
+
+        {/* Mobile menu */}
+        <div className="dropdown-end dropdown md:hidden">
+          <label tabIndex={0} className="btn-ghost btn-square btn m-1">
+            <HiBars2 className="text-3xl" />
+          </label>
+
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu rounded-box w-52 bg-base-100 p-2 shadow"
+          >
+            <li>
+              <a>About</a>
+            </li>
+
+            {session?.user ? (
+              <>
+                <li>
+                  <Link href="/events">Events</Link>
+                </li>
+                <li>
+                  <Link href="/calendar">Calendar</Link>
+                </li>
+                <li>
+                  <a onClick={signOut}>Log out</a>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <a onClick={signIn}>Sign in</a>
+                </li>
+              </>
+            )}
+          </ul>
         </div>
       </div>
     </div>

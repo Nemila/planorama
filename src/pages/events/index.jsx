@@ -36,30 +36,10 @@ export const getServerSideProps = async (context) => {
 
 const Events = ({ events }) => {
   return (
-    // <Box py={4}>
-    //   <Container maxW="container.xl">
-    //     <Flex gap={4} flexWrap="wrap-reverse" align="flex-end">
-    //       <Flex flex={2} flexWrap="wrap" gap={4}>
-    //         <Text w="full" fontSize="xl" fontWeight="medium">
-    //           Your events list
-    //         </Text>
-
-    //         {events.length > 0 ? (
-    //           events.map((event) => <EventCard key={event.id} event={event} />)
-    //         ) : (
-    //           <Text>There is nothing here yet.</Text>
-    //         )}
-    //       </Flex>
-
-    //       <NewEventForm />
-    //     </Flex>
-    //   </Container>
-    // </Box>
-
-    <div className="container mx-auto p-6">
-      <div className="flex flex-wrap items-start gap-8">
+    <div className="container mx-auto p-8">
+      <div className="flex flex-wrap-reverse items-end gap-8">
         <div className="flex-1">
-          <h2 className="mb-4 text-2xl font-semibold">Your events list</h2>
+          <h2 className="mb-4 text-2xl font-semibold">List of events</h2>
           <div className="flex flex-wrap gap-4">
             {events.length > 0 ? (
               events.map((event) => <EventCard key={event.id} event={event} />)

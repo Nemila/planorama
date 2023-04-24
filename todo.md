@@ -5,8 +5,8 @@ OBSERVATIONS AVANT CONNEXION FONCTIONNALITÉ
 
 OBSERVATIONS APRÈS LA CONNEXION
 ⁃ [x] Ajoutez des contrôles de saisie a chaque champs(ex: la date de début l’événement doit être supérieur ou égal à la date du jour et la date de fin aussi l’être)
-⁃ [ ] Avoir des photos en fonction de chaque événements
-⁃ [x] Combiner( dans la page ÉVÉNEMENT on doit avoir AFFICHER ÉVENT et CRÉER ÉVENT)
+⁃ [x] Avoir des photos en fonction de chaque événements
+⁃ [x] Combiner (dans la page ÉVÉNEMENT on doit avoir AFFICHER ÉVENT et CRÉER ÉVENT)
 ⁃ [ ] Pouvoir archiver certains événements pour pouvoir les réutiliser si nécessaires
 ⁃ [ ] Proposer des liste déroulante à causer plus que des saisies mais avoir un champs qui permet à l’utilisateur de saisir
 ⁃ [x] Modification du nom où se passe l’événement en LIEU
@@ -19,4 +19,4 @@ OBSERVATIONS IMPORTANTES
 ⁃ [ ] Ajoutée plus de fonctionnalités
 
 CE QU’ON PEUT FAIRE
-⁃ [ ] Ajouter un système de rappel avec calendrier
+⁃ [x] Ajouter un système de rappel avec calendrier

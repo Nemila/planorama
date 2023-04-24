@@ -40,7 +40,7 @@ const EventCard = ({ event }) => {
             <Link className="btn-primary btn" href={`/events/${event.id}`}>
               Details
             </Link>
-            <label htmlFor="my-modal" className="btn">
+            <label htmlFor="eventDeleteModal" className="btn">
               Delete
             </label>
           </div>
