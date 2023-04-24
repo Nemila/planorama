@@ -21,7 +21,9 @@ const NewEventForm = () => {
     const today = new Date().getTime();
     const startAt = new Date(data.startAt).getTime();
     const endAt = new Date(data.endAt).getTime();
+
     const isDateError = startAt < today || endAt < today || startAt >= endAt;
+
     if (isDateError) {
       return toast("Invalid date range.", {
         type: "error",
@@ -31,17 +33,19 @@ const NewEventForm = () => {
     // image upload
     const formData = new FormData();
     formData.append("file", data.image[0]);
+
     const fileName = data.name.toLowerCase().split(" ").join("_") + v4();
+
     const { data: imageData, error } = await supabase.storage
       .from("events")
       .upload(fileName, formData, {
         cacheControl: "3600",
         upsert: false,
       });
+
     if (error) {
       console.log(error);
     }
-    console.log(imageData.path);
 
     const res = await axios.post("http://localhost:3000/api/addEvent", {
       ...data,
@@ -61,7 +65,7 @@ const NewEventForm = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <h2 className="col-span-2 text-2xl font-semibold">Create an event</h2>
-      
+
       <div className="form-control col-span-2">
         <label className="label">
           <span className="label-text">Name</span>
@@ -130,6 +134,19 @@ const NewEventForm = () => {
           className="file-input-bordered file-input"
           {...register("image")}
         />
+      </div>
+
+      <div className="form-control col-span-2">
+        <label className="label">
+          <span className="label-text">Template</span>
+        </label>
+        <select className="select-bordered select" {...register("template")}>
+          <option value="">Choose</option>
+          <option value="blank">Blank</option>
+          <option value="birthday">Birthday</option>
+          <option value="wedding">Wedding</option>
+          <option value="conference">Conference</option>
+        </select>
       </div>
 
       <button

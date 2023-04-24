@@ -22,6 +22,7 @@ export const getServerSideProps = async (context) => {
     },
     include: {
       blocs: true,
+      tasks: true,
     },
   });
 
@@ -40,14 +41,17 @@ const EventPage = ({ event }) => {
     <div className="container mx-auto">
       <div className="flex flex-wrap justify-between gap-8 p-8">
         <div className="flex-1 space-y-4">
-          <Image
-            src={`https://heluvngkkydwiankayff.supabase.co/storage/v1/object/public/events/${event.image}`}
-            className="w-full"
-            width={999999}
-            height={999999}
-            title={event.name}
-            alt={event.name}
-          />
+          <figure className="group h-56 w-full overflow-hidden">
+            <Image
+              src={`https://heluvngkkydwiankayff.supabase.co/storage/v1/object/public/events/${event.image}`}
+              className="h-full w-full object-cover object-center transition-transform group-hover:scale-125"
+              width={999999}
+              height={999999}
+              title={event.name}
+              alt={event.name}
+              priority
+            />
+          </figure>
 
           <div className="prose">
             <h3>{event.name}</h3>
@@ -70,38 +74,26 @@ const EventPage = ({ event }) => {
           </div>
         </div>
 
-        <div className="min-w-sm space-y-6">
+        <div className="min-w-sm w-full max-w-md space-y-6">
           <h3 className="text-xl font-semibold">Event Checklist</h3>
 
           <div>
-            <div className="form-control">
-              <label className="label cursor-pointer gap-4">
-                <span className="label-text">
-                  Set goals and objectives for the conference
-                </span>
-                <input type="checkbox" className="checkbox-primary checkbox" />
-              </label>
-            </div>
-
-            <div className="form-control">
-              <label className="label cursor-pointer gap-4">
-                <span className="label-text">
-                  Identify target audience and create a marketing plan to reach
-                  them
-                </span>
-                <input type="checkbox" className="checkbox-primary checkbox" />
-              </label>
-            </div>
-
-            <div className="form-control">
-              <label className="label cursor-pointer gap-4">
-                <span className="label-text">
-                  Identify target audience and create a marketing plan to reach
-                  them
-                </span>
-                <input type="checkbox" className="checkbox-primary checkbox" />
-              </label>
-            </div>
+            {event?.tasks.length > 0 ? (
+              event?.tasks.map((task) => (
+                <div className="form-control" key={task.id}>
+                  <label className="label cursor-pointer gap-4">
+                    <span className="label-text">{task.label}</span>
+                    <input
+                      defaultChecked={task.isCompleted}
+                      type="checkbox"
+                      className="checkbox-primary checkbox"
+                    />
+                  </label>
+                </div>
+              ))
+            ) : (
+              <p>No task created yet.</p>
+            )}
           </div>
 
           <div className="btn-group">
@@ -117,8 +109,9 @@ const EventPage = ({ event }) => {
         </div>
       </div>
 
-      <NewTaskModal />
+      <NewTaskModal eventId={event.id} />
     </div>
+
     // <Flex py={6}>
     //   <Container maxW="container.xl">
     //     <SimpleGrid columns={5} spacing={6}>
