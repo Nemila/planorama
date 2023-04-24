@@ -1,10 +1,10 @@
-## OBSERVATIONS AVANT CONNEXION FONCTIONNALITÉ
+## Before sign in
 
 - [x] Add about page
 - [x] Allow user to create account with any email
 - [ ] Allow user to create account with social medias
 
-## OBSERVATIONS APRÈS LA CONNEXION
+## After sign in
 
 - [x] Date fields validation
 - [x] Add images to an event
@@ -15,11 +15,11 @@
 - [x] Choose happy colors
 - [x] Don't mix french and english
 
-## OBSERVATIONS IMPORTANTES
+## Important
 
 - [ ] Add more stuffs
 - [ ] Boost speed with swr
 
-## CE QU’ON PEUT FAIRE
+## What we can do
 
 - [x] Add a calendar system
