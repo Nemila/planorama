@@ -1,28 +1,25 @@
 ## OBSERVATIONS AVANT CONNEXION FONCTIONNALITÉ
 
-⁃ [x] Ajoutez une page a propos
-⁃ [x] Permette à n’importe quel compte de se connecter ( gmail, Yahoo, Hotmail…)
-⁃ [ ] Permettre une connection via les réseaux sociaux ( Fbk, Instagram, Twitter…)
+- [x] Add about page
+- [x] Allow user to create account with any email
+- [ ] Allow user to create account with social medias
 
 ## OBSERVATIONS APRÈS LA CONNEXION
 
-⁃ [x] Ajoutez des contrôles de saisie a chaque champs(ex: la date de début l’événement doit être supérieur ou égal à la date du jour et la date de fin aussi l’être)
-⁃ [x] Avoir des photos en fonction de chaque événements
-⁃ [x] Combiner (dans la page ÉVÉNEMENT on doit avoir AFFICHER ÉVENT et CRÉER ÉVENT)
-⁃ [ ] Pouvoir archiver certains événements pour pouvoir les réutiliser si nécessaires
-⁃ [ ] Proposer des liste déroulante à causer plus que des saisies mais avoir un champs qui permet à l’utilisateur de saisir
-⁃ [x] Modification du nom où se passe l’événement en LIEU
-⁃ [x] Proposer des choses à faire en fonction des événements
-⁃ [x] Couleurs joyeuse
-⁃ [x] Ne pas mélanger le français et l’anglais
+- [x] Date fields validation
+- [x] Add images to an event
+- [x] Event form and event list on the same page
+- [ ] Ability to archive an event
+- [x] Change "address" to "location"
+- [x] Provide template for events
+- [x] Choose happy colors
+- [x] Don't mix french and english
 
 ## OBSERVATIONS IMPORTANTES
 
-⁃ [ ] Insuffisances de fonctionnalités
-⁃ [ ] Ajoutée plus de fonctionnalités
-
-- [ ] Augmenter la vitesse en changeant de methode de fetch
+- [ ] Add more stuffs
+- [ ] Boost speed with swr
 
 ## CE QU’ON PEUT FAIRE
 
-⁃ [x] Ajouter un système de rappel avec calendrier
+- [x] Add a calendar system
