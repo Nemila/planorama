@@ -7,8 +7,9 @@ export default async function handler(req, res) {
   const { method } = req;
 
   if (!session) {
-    res.status(400);
-    throw new Error("You need to be logged in");
+    res.status(500).json({
+      err: "You need to be connected",
+    });
   }
 
   switch (method) {
@@ -31,8 +32,9 @@ export default async function handler(req, res) {
 
         res.status(200).json(events);
       } catch (error) {
-        res.status(400);
-        throw new Error(error.message);
+        res.status(500).json({
+          err: error.message,
+        });
       }
       break;
 
@@ -97,8 +99,9 @@ export default async function handler(req, res) {
 
         res.status(201).json(newEvent);
       } catch (error) {
-        res.status(400);
-        throw new Error(error.message);
+        res.status(500).json({
+          err: error.message,
+        });
       }
       break;
 

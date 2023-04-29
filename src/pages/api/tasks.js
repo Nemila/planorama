@@ -3,11 +3,6 @@ import prisma from "@/lib/prisma";
 export default async function handler(req, res) {
   const { method } = req;
 
-  if (!session) {
-    res.status(400);
-    throw new Error("You need to be logged in");
-  }
-
   switch (method) {
     // METHOD GET - Get all TASKS
     case "GET":
@@ -17,11 +12,11 @@ export default async function handler(req, res) {
             eventId: Number(req.body.eventId),
           },
         });
-
         res.status(200).json(tasks);
       } catch (error) {
-        res.status(400);
-        throw new Error(error.message);
+        res.status(500).json({
+          err: error.message,
+        });
       }
       break;
 
@@ -29,8 +24,7 @@ export default async function handler(req, res) {
     case "POST":
       try {
         const { label, eventId } = req.body;
-
-        const newTask = await prisma.event.create({
+        const newTask = await prisma.task.create({
           data: {
             label,
             event: {
@@ -38,11 +32,11 @@ export default async function handler(req, res) {
             },
           },
         });
-
         res.status(201).json(newTask);
       } catch (error) {
-        res.status(400);
-        throw new Error(error.message);
+        res.status(500).json({
+          err: error.message,
+        });
       }
       break;
 

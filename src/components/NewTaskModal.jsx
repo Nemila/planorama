@@ -3,20 +3,24 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { HiPlus } from "react-icons/hi2";
+import { useSWRConfig } from "swr";
 
 const NewTaskModal = ({ eventId }) => {
   const { register, handleSubmit, reset } = useForm();
-  const router = useRouter();
+  const { mutate } = useSWRConfig();
 
   const onSubmit = async (data) => {
-    const response = await axios.post("http://localhost:3000/api/addTask", {
-      ...data,
-      eventId,
-    });
-    if (response.data) {
-      reset();
-      console.log(response.data);
-      router.reload(router.asPath);
+    try { 
+      const response = await axios.post("/api/tasks", {
+        ...data,
+        eventId,
+      });
+      if (response.data) {
+        reset();
+        mutate(`/api/event/${eventId}`);
+      }
+    } catch (error) {
+      console.log(error.response.data);
     }
   };
 
@@ -48,7 +52,8 @@ const NewTaskModal = ({ eventId }) => {
                 placeholder="Type here..."
                 {...register("label", { required: true })}
               />
-              <button htmlFor="newTaskModal" className="btn" type="submit">
+
+              <button className="btn" type="submit">
                 <HiPlus className="text-2xl" />
               </button>
             </div>

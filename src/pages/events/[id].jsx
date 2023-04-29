@@ -1,11 +1,11 @@
 import NewTaskModal from "@/components/NewTaskModal";
+import Spinner from "@/components/Spinner";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { HiCheck, HiMapPin, HiPlus } from "react-icons/hi2";
-import { authOptions } from "../api/auth/[...nextauth]";
 import useSWR from "swr";
-import Spinner from "@/components/Spinner";
+import { authOptions } from "../api/auth/[...nextauth]";
+import { useRouter } from "next/router";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -54,8 +54,8 @@ const EventPage = ({ session }) => {
           <h3 className="text-xl font-semibold">Event Checklist</h3>
 
           <div>
-            {event?.tasks.length > 0 ? (
-              event?.tasks.map((task) => (
+            {data.tasks.length > 0 ? (
+              data.tasks.map((task) => (
                 <div className="form-control" key={task.id}>
                   <label className="label cursor-pointer gap-4">
                     <span className="label-text">{task.label}</span>
