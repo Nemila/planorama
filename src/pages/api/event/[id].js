@@ -1,21 +1,31 @@
 import prisma from "@/lib/prisma";
+import supabase from "@/lib/supabase";
 
 const handler = async (req, res) => {
-  if (req.method !== "DELETE") {
-    return res.status(405).json({ message: "Method not allowed" });
-  }
+  const { query, method } = req;
+  const id = parseInt(query.id);
 
-  const { id } = req.query;
-
-  try {
-    const response = await prisma.event.delete({
-      where: {
-        id: parseInt(id),
-      },
-    });
-    res.status(200).json(response.data);
-  } catch (error) {
-    res.status(403).json({ err: error.message });
+  switch (method) {
+    case "DELETE":
+      const deletedEvent = await prisma.event.delete({
+        where: { id },
+      });
+      await supabase.storage.from("events").remove([deletedEvent.image]);
+      res.status(200).json(deletedEvent);
+      break;
+    case "GET":
+      const event = await prisma.event.findUnique({
+        where: { id },
+        include: {
+          blocs: true,
+          tasks: true,
+        },
+      });
+      res.status(200).json(event);
+      break;
+    default:
+      res.setHeader("Allow", ["DELETE", "GET"]);
+      res.status(405).end(`Method ${method} Not Allowed`);
   }
 };
 

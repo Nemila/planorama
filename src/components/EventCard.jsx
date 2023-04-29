@@ -1,29 +1,36 @@
 import axios from "axios";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import DeleteModal from "./DeleteModal";
-import { toast } from "react-toastify";
 import Image from "next/image";
+import Link from "next/link";
+import { toast } from "react-toastify";
+import { useSWRConfig } from "swr";
+import DeleteModal from "./DeleteModal";
 
 const EventCard = ({ event }) => {
-  const router = useRouter();
+  const { mutate } = useSWRConfig();
 
   const handleEventDelete = async () => {
-    await axios.delete(`http://localhost:3000/api/event/${event.id}`);
-    toast("Event deleted with success.");
-    router.replace(router.asPath);
+    try {
+      await axios.delete(`/api/event/${event.id}`);
+      mutate("/api/events");
+      toast("Event deleted with success.");
+    } catch (error) {
+      console.log(error.response.data);
+    }
   };
 
   return (
     <>
-      <div className="card compact min-w-[300px] max-w-md flex-1 bg-base-100 shadow-md">
+      <div
+        id={event.id}
+        className="card compact min-w-[300px] max-w-md flex-1 bg-base-100 shadow-md"
+      >
         <figure className="h-32 w-full overflow-hidden">
           <Image
             className="h-full w-full object-cover"
             alt="banner"
             width={99999}
             height={99999}
-            src={`https://heluvngkkydwiankayff.supabase.co/storage/v1/object/public/events/${event?.image}`}
+            src={`https://vwpobyxervyuezweoaju.supabase.co/storage/v1/object/public/events/${event?.image}`}
           />
         </figure>
         <div className="card-body">
@@ -40,14 +47,14 @@ const EventCard = ({ event }) => {
             <Link className="btn-primary btn" href={`/events/${event.id}`}>
               Details
             </Link>
-            <label htmlFor="eventDeleteModal" className="btn">
+            <label htmlFor={`deleteEventModal-${event.id}`} className="btn">
               Delete
             </label>
           </div>
         </div>
       </div>
 
-      <DeleteModal handleEventDelete={handleEventDelete} />
+      <DeleteModal handleEventDelete={handleEventDelete} eventId={event.id} />
     </>
   );
 };

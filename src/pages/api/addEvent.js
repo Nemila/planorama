@@ -55,10 +55,6 @@ const conferenceTasks = [
 const handler = async (req, res) => {
   const session = await getServerSession(req, res, authOptions);
 
-  if (req.method !== "POST") {
-    res.status(403).json({ err: "POST requests only" });
-  }
-
   try {
     const { name, description, location, image, startAt, endAt, template } =
       req.body;

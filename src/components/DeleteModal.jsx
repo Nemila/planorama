@@ -1,13 +1,17 @@
 import React from "react";
 
-const DeleteModal = ({ handleEventDelete }) => {
+const DeleteModal = ({ handleEventDelete, eventId }) => {
   return (
     <>
-      <input type="checkbox" id="eventDeleteModal" className="modal-toggle" />
+      <input
+        type="checkbox"
+        id={`deleteEventModal-${eventId}`}
+        className="modal-toggle"
+      />
 
       <label
         className="modal modal-bottom sm:modal-middle"
-        htmlFor="eventDeleteModal"
+        htmlFor={`deleteEventModal-${eventId}`}
       >
         <label className="modal-box" htmlFor="">
           <h3 className="text-lg font-bold">Delete Event</h3>
@@ -16,12 +20,15 @@ const DeleteModal = ({ handleEventDelete }) => {
             undone.
           </p>
           <div className="modal-action">
-            <label htmlFor="eventDeleteModal" className="btn-danger btn">
+            <label
+              htmlFor={`deleteEventModal-${eventId}`}
+              className="btn-danger btn"
+            >
               Cancel
             </label>
 
             <label
-              htmlFor="eventDeleteModal"
+              htmlFor={`deleteEventModal-${eventId}`}
               className="btn-error btn"
               onClick={handleEventDelete}
             >

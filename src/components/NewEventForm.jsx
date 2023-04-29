@@ -1,19 +1,18 @@
 import supabase from "@/lib/supabase";
 import axios from "axios";
-import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { useSWRConfig } from "swr";
 import { v4 } from "uuid";
 
 const NewEventForm = () => {
-  const router = useRouter();
-  // const toast = useToast();
+  const { mutate } = useSWRConfig();
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { isSubmitting },
+    formState: { isSubmitting, isSubmitSuccessful, isSubmitted },
   } = useForm();
 
   const onSubmit = async (data) => {
@@ -33,29 +32,26 @@ const NewEventForm = () => {
     // image upload
     const formData = new FormData();
     formData.append("file", data.image[0]);
+    const fileName = data.image[0].name + v4();
+    console.log(fileName);
 
-    const fileName = data.name.toLowerCase().split(" ").join("_") + v4();
-
-    const { data: imageData, error } = await supabase.storage
+    const { data: imageData } = await supabase.storage
       .from("events")
       .upload(fileName, formData, {
         cacheControl: "3600",
         upsert: false,
       });
 
-    if (error) {
-      console.log(error);
-    }
-
-    const res = await axios.post("http://localhost:3000/api/addEvent", {
+    // submit data
+    const res = await axios.post("/api/events", {
       ...data,
       image: imageData.path,
     });
 
     if (res.data) {
-      reset();
       toast("Event created with success.");
-      router.replace(router.asPath);
+      mutate("/api/events");
+      reset();
     }
   };
 
@@ -75,6 +71,33 @@ const NewEventForm = () => {
           className="input-bordered input"
           placeholder="Type here..."
           {...register("name", { required: true })}
+        />
+      </div>
+
+      <div className="form-control col-span-2">
+        <label className="label">
+          <span className="label-text">Template</span>
+        </label>
+        <select
+          className="select-bordered select"
+          {...register("template", { required: true })}
+        >
+          <option value="">Choose</option>
+          <option value="blank">Blank</option>
+          <option value="birthday">Birthday</option>
+          <option value="wedding">Wedding</option>
+          <option value="conference">Conference</option>
+        </select>
+      </div>
+
+      <div className="form-control col-span-2">
+        <label className="label">
+          <span className="label-text">Pick an image</span>
+        </label>
+        <input
+          type="file"
+          className="file-input-bordered file-input"
+          {...register("image", { required: true })}
         />
       </div>
 
@@ -123,30 +146,6 @@ const NewEventForm = () => {
           className="textarea-bordered textarea h-24"
           placeholder="Something about the event..."
         ></textarea>
-      </div>
-
-      <div className="form-control col-span-2">
-        <label className="label">
-          <span className="label-text">Pick an image</span>
-        </label>
-        <input
-          type="file"
-          className="file-input-bordered file-input"
-          {...register("image")}
-        />
-      </div>
-
-      <div className="form-control col-span-2">
-        <label className="label">
-          <span className="label-text">Template</span>
-        </label>
-        <select className="select-bordered select" {...register("template")}>
-          <option value="">Choose</option>
-          <option value="blank">Blank</option>
-          <option value="birthday">Birthday</option>
-          <option value="wedding">Wedding</option>
-          <option value="conference">Conference</option>
-        </select>
       </div>
 
       <button

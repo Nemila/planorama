@@ -1,41 +1,22 @@
 import NewTaskModal from "@/components/NewTaskModal";
-import prisma from "@/lib/prisma";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { HiCheck, HiMapPin, HiPlus } from "react-icons/hi2";
+import { authOptions } from "../api/auth/[...nextauth]";
+import useSWR from "swr";
+import Spinner from "@/components/Spinner";
 
-export const getServerSideProps = async (context) => {
-  const session = await getSession(context);
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/api/auth/signin",
-        permanent: false,
-      },
-    };
-  }
+const EventPage = ({ session }) => {
+  const router = useRouter();
+  const { id } = router.query;
 
-  const event = await prisma.event.findUnique({
-    where: {
-      id: parseInt(context.params.id),
-    },
-    include: {
-      blocs: true,
-      tasks: true,
-    },
-  });
+  const { data, error, isLoading } = useSWR(`/api/event/${id}`, fetcher);
 
-  return {
-    props: {
-      event: JSON.parse(JSON.stringify(event)),
-    },
-  };
-};
-
-const EventPage = ({ event }) => {
-  const startDate = new Date(event.startAt).toLocaleString();
-  const endDate = new Date(event.endAt).toLocaleString();
+  if (error) return <div className="p-4">Oops something went wrong</div>;
+  if (isLoading) return <Spinner />;
 
   return (
     <div className="container mx-auto">
@@ -43,34 +24,29 @@ const EventPage = ({ event }) => {
         <div className="flex-1 space-y-4">
           <figure className="group h-56 w-full overflow-hidden">
             <Image
-              src={`https://heluvngkkydwiankayff.supabase.co/storage/v1/object/public/events/${event.image}`}
+              src={`https://vwpobyxervyuezweoaju.supabase.co/storage/v1/object/public/events/${data.image}`}
               className="h-full w-full object-cover object-center transition-transform group-hover:scale-125"
               width={999999}
               height={999999}
-              title={event.name}
-              alt={event.name}
+              title={data.name}
+              alt={data.name}
               priority
             />
           </figure>
 
           <div className="prose">
-            <h3>{event.name}</h3>
+            <h3>{data.name}</h3>
 
             <p className="flex items-center gap-2">
               <HiMapPin className="text-2xl" />
-              {event.location}
+              {data.location}
             </p>
-
-            {/* <p>
-              <span>From: {startDate}</span> <br />
-              <span>To: {endDate}</span>
-            </p> */}
 
             <p>
-              Event Status <span className="badge">{event.status}</span>
+              Event Status <span className="badge">{data.status}</span>
             </p>
 
-            <p>{event.description}</p>
+            <p>{data.description}</p>
           </div>
         </div>
 
@@ -109,103 +85,28 @@ const EventPage = ({ event }) => {
         </div>
       </div>
 
-      <NewTaskModal eventId={event.id} />
+      <NewTaskModal eventId={data.id} />
     </div>
-
-    // <Flex py={6}>
-    //   <Container maxW="container.xl">
-    //     <SimpleGrid columns={5} spacing={6}>
-    //       <GridItem colSpan={3}>
-    //         <VStack align="flex-start" spacing={2}>
-    //           <Heading size="md">{event.name}</Heading>
-    //           <Text>
-    //             Status de l&apos;evenement: <Badge>{event.status}</Badge>
-    //           </Text>
-
-    //           <Text>Debut de l&apos;evenement: {startDate}</Text>
-
-    //           <Text>Fin de l&apos;evenement: {endDate}</Text>
-
-    //           <Text>{event.address}</Text>
-    //         </VStack>
-
-    //         <VStack align="flex-start" gap={2} mt={8}>
-    //           <Heading size="md">Planing de votre evenement</Heading>
-    //           <Divider />
-    //           <VStack spacing={4}>
-    //             <Button
-    //               w="full"
-    //               colorScheme="blue"
-    //               variant="outline"
-    //               onClick={onOpen}
-    //             >
-    //               Ajouter un bloc
-    //             </Button>
-    //             {event.blocs.map((bloc) => (
-    //               <PlaningBloc key={bloc.id} bloc={bloc} />
-    //             ))}
-    //           </VStack>
-    //         </VStack>
-    //       </GridItem>
-
-    //       <GridItem colSpan={2}>
-    //         <VStack align="flex-start" spacing={4}>
-    //           <Heading size="md">Liste des choses a faire</Heading>
-    //           <Divider />
-    //           <VStack spacing={4} divider={<Divider />}>
-    //             <TaskBloc />
-    //             <TaskBloc />
-    //             <TaskBloc />
-    //           </VStack>
-    //         </VStack>
-    //       </GridItem>
-    //     </SimpleGrid>
-    //   </Container>
-
-    //   <Modal isOpen={isOpen} onClose={onClose}>
-    //     <ModalOverlay />
-    //     <ModalContent>
-    //       <Divider />
-    //       <ModalHeader>
-    //         <Heading size="md">Nouveau Bloc</Heading>
-    //         <ModalCloseButton />
-    //       </ModalHeader>
-
-    //       <Divider />
-
-    //       <ModalBody>
-    //         <VStack>
-    //           <HStack w="full">
-    //             <FormControl>
-    //               <FormLabel>Debut</FormLabel>
-    //               <Input type="time" />
-    //             </FormControl>
-
-    //             <FormControl>
-    //               <FormLabel>Fin</FormLabel>
-    //               <Input type="time" />
-    //             </FormControl>
-    //           </HStack>
-
-    //           <FormControl>
-    //             <FormLabel>Nom de l&apos;evenement</FormLabel>
-    //             <Input type="text" placeholder="Nom de l'evenement" />
-    //           </FormControl>
-
-    //           <FormControl>
-    //             <FormLabel>Description</FormLabel>
-    //             <Textarea placeholder="Description de l'evenement"></Textarea>
-    //           </FormControl>
-    //         </VStack>
-    //       </ModalBody>
-
-    //       <ModalFooter>
-    //         <Button colorScheme="blue">Ajouter</Button>
-    //       </ModalFooter>
-    //     </ModalContent>
-    //   </Modal>
-    // </Flex>
   );
+};
+
+export const getServerSideProps = async (context) => {
+  const session = await getServerSession(context.req, context.res, authOptions);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/api/auth/signin",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      session,
+    },
+  };
 };
 
 export default EventPage;
