@@ -22,10 +22,10 @@ const EventPage = ({ session }) => {
     <div className="container mx-auto">
       <div className="flex flex-wrap justify-between gap-8 p-8">
         <div className="flex-1 space-y-4">
-          <figure className="group h-56 w-full overflow-hidden">
+          <figure className="max-w-xl">
             <Image
               src={`https://vwpobyxervyuezweoaju.supabase.co/storage/v1/object/public/events/${data.image}`}
-              className="h-full w-full object-cover object-center transition-transform group-hover:scale-125"
+              className=""
               width={999999}
               height={999999}
               title={data.name}
@@ -72,16 +72,21 @@ const EventPage = ({ session }) => {
             )}
           </div>
 
-          <div className="btn-group">
-            <label htmlFor="newTaskModal" className="btn gap-2">
-              <HiPlus className="text-xl" />
-              Create
-            </label>
-            <button className="btn-primary btn gap-2">
-              <HiCheck className="text-xl" />
-              Submit
-            </button>
-          </div>
+          <label htmlFor="newTaskModal" className="btn-primary btn gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="h-6 w-6"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            New Tasks
+          </label>
         </div>
       </div>
 

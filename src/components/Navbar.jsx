@@ -32,9 +32,8 @@ const Navbar = () => {
         <div className="flex-1">
           <Link
             href="/"
-            className="btn-link btn gap-2 text-xl normal-case no-underline"
+            className="btn-primary btn-ghost btn gap-1 text-xl normal-case no-underline"
           >
-            <HiStar className="text-2xl" />
             Planorama
           </Link>
         </div>
