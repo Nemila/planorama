@@ -72,17 +72,6 @@ const Navbar = () => {
               </>
             )}
           </ul>
-
-          <div className="avatar">
-            <div className="w-10 rounded-full">
-              <Image
-                width={100}
-                height={100}
-                alt="avatar"
-                src={session?.user.image}
-              />
-            </div>
-          </div>
         </div>
 
         <div className="dropdown-end dropdown md:hidden">
