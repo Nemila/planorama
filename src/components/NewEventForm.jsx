@@ -12,7 +12,7 @@ const NewEventForm = () => {
     register,
     handleSubmit,
     reset,
-    formState: { isSubmitting, isSubmitSuccessful, isSubmitted },
+    formState: { errors, isSubmitting },
   } = useForm();
 
   const onSubmit = async (data) => {
@@ -66,12 +66,21 @@ const NewEventForm = () => {
         <label className="label">
           <span className="label-text">Name</span>
         </label>
+
         <input
           type="text"
           className="input-bordered input"
           placeholder="Type here..."
           {...register("name", { required: true })}
         />
+
+        {errors.name?.type === "required" && (
+          <label className="label">
+            <span className="label-text-alt text-error">
+              This field is required
+            </span>
+          </label>
+        )}
       </div>
 
       <div className="form-control col-span-2">
@@ -88,64 +97,117 @@ const NewEventForm = () => {
           <option value="wedding">Wedding</option>
           <option value="conference">Conference</option>
         </select>
+
+        {errors.template?.type === "required" && (
+          <label className="label">
+            <span className="label-text-alt text-error">
+              This field is required
+            </span>
+          </label>
+        )}
       </div>
 
       <div className="form-control col-span-2">
         <label className="label">
           <span className="label-text">Pick an image</span>
         </label>
+
         <input
           type="file"
           className="file-input-bordered file-input"
           {...register("image", { required: true })}
         />
+
+        {errors.image?.type === "required" && (
+          <label className="label">
+            <span className="label-text-alt text-error">
+              This field is required
+            </span>
+          </label>
+        )}
       </div>
 
       <div className="form-control">
         <label className="label">
           <span className="label-text">From</span>
         </label>
+
         <input
           type="datetime-local"
           className="input-bordered input"
           placeholder="Type here..."
           {...register("startAt", { required: true })}
         />
+
+        {errors.startAt?.type === "required" && (
+          <label className="label">
+            <span className="label-text-alt text-error">
+              This field is required
+            </span>
+          </label>
+        )}
       </div>
 
       <div className="form-control">
         <label className="label">
           <span className="label-text">To</span>
         </label>
+
         <input
           type="datetime-local"
           className="input-bordered input"
           placeholder="Type here..."
           {...register("endAt", { required: true })}
         />
+
+        {errors.endAt?.type === "required" && (
+          <label className="label">
+            <span className="label-text-alt text-error">
+              This field is required
+            </span>
+          </label>
+        )}
       </div>
 
       <div className="form-control col-span-2">
         <label className="label">
           <span className="label-text">Location</span>
         </label>
+
         <input
           type="text"
           className="input-bordered input"
           placeholder="Type here..."
           {...register("location", { required: true })}
         />
+
+        {errors.location?.type === "required" && (
+          <label className="label">
+            <span className="label-text-alt text-error">
+              This field is required
+            </span>
+          </label>
+        )}
       </div>
 
       <div className="form-control col-span-2">
         <label className="label">
           <span className="label-text">Description</span>
         </label>
+
         <textarea
           {...register("description", { required: true })}
           className="textarea-bordered textarea h-24"
           placeholder="Something about the event..."
         ></textarea>
+
+        {errors.description?.type === "required" && (
+          <label className="label">
+            <span className="label-text-alt text-error">
+              This field is required
+            </span>
+          </label>
+        )}
       </div>
 
       <button

@@ -40,16 +40,12 @@ const Navbar = () => {
 
         <div className="hidden flex-none space-x-2 md:flex">
           <ul className="menu menu-horizontal space-x-2 px-1">
-            {/* <li>
-              <a>Resources</a>
+            <li>
+              <Link href="/about">About</Link>
             </li>
 
             <li>
-              <a>Solutions</a>
-            </li> */}
-
-            <li>
-              <Link href="/about">About</Link>
+              <Link href="/contact">Contact us</Link>
             </li>
 
             {session?.user ? (
@@ -58,6 +54,14 @@ const Navbar = () => {
                   <Link className="justify-between" href="/events">
                     Events
                   </Link>
+                </li>
+
+                <li>
+                  <Link href="/calendar">Calendar</Link>
+                </li>
+
+                <li>
+                  <a onClick={signOut}>Log out</a>
                 </li>
               </>
             ) : (
@@ -69,35 +73,18 @@ const Navbar = () => {
             )}
           </ul>
 
-          {session?.user && (
-            <div className="dropdown-end dropdown">
-              <label tabIndex={0} className="btn-ghost btn-circle avatar btn">
-                <div className="w-10 rounded-full">
-                  <Image
-                    src={session.user.image}
-                    width={100}
-                    height={100}
-                    alt="profile"
-                  />
-                </div>
-              </label>
-
-              <ul
-                tabIndex={0}
-                className="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-base-100 p-2 shadow"
-              >
-                <li>
-                  <Link href="/calendar">Calendar</Link>
-                </li>
-                <li>
-                  <a onClick={signOut}>Log out</a>
-                </li>
-              </ul>
+          <div className="avatar">
+            <div className="w-10 rounded-full">
+              <Image
+                width={100}
+                height={100}
+                alt="avatar"
+                src={session.user.image}
+              />
             </div>
-          )}
+          </div>
         </div>
 
-        {/* Mobile menu */}
         <div className="dropdown-end dropdown md:hidden">
           <label tabIndex={0} className="btn-ghost btn-square btn m-1">
             <HiBars2 className="text-3xl" />
@@ -111,14 +98,22 @@ const Navbar = () => {
               <Link href="/about">About</Link>
             </li>
 
+            <li>
+              <Link href="/contact">Contact us</Link>
+            </li>
+
             {session?.user ? (
               <>
                 <li>
-                  <Link href="/events">Events</Link>
+                  <Link className="justify-between" href="/events">
+                    Events
+                  </Link>
                 </li>
+
                 <li>
                   <Link href="/calendar">Calendar</Link>
                 </li>
+
                 <li>
                   <a onClick={signOut}>Log out</a>
                 </li>
@@ -126,7 +121,7 @@ const Navbar = () => {
             ) : (
               <>
                 <li>
-                  <a onClick={signIn}>Sign in</a>
+                  <a onClick={signIn}>Sign In</a>
                 </li>
               </>
             )}
