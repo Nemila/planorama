@@ -79,7 +79,7 @@ const Navbar = () => {
                 width={100}
                 height={100}
                 alt="avatar"
-                src={session.user.image}
+                src={session?.user.image}
               />
             </div>
           </div>
