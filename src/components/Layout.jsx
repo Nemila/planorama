@@ -16,23 +16,14 @@ const Layout = ({ children, session }) => {
     <>
       <Head>
         <title>Planorama</title>
-        <meta
-          name="description"
-          content="Plan your next event with ease. Our event management website offers a complete solution for organizing, promoting, and executing successful events. From corporate conferences to weddings and birthdays, our platform provides all the tools you need to create an unforgettable experience for your attendees. Start planning today and take the stress out of event planning!"
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
       </Head>
 
       <SessionProvider session={session}>
-        <div
-          className="flex min-h-screen flex-col overflow-x-hidden bg-base-200"
-          data-theme="light"
-        >
-          <Navbar />
-          <ToastContainer />
-          {isLoading && <Spinner />}
-          {!isLoading && children}
-        </div>
+        <Navbar />
+        <ToastContainer />
+        {isLoading && <Spinner />}
+        {!isLoading && children}
 
         <Footer />
       </SessionProvider>
