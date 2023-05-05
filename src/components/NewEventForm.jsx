@@ -127,7 +127,7 @@ const NewEventForm = () => {
         )}
       </div>
 
-      <div className="form-control">
+      <div className="form-control col-span-2 md:col-span-1">
         <label className="label">
           <span className="label-text">From</span>
         </label>
@@ -148,7 +148,7 @@ const NewEventForm = () => {
         )}
       </div>
 
-      <div className="form-control">
+      <div className="form-control col-span-2 md:col-span-1">
         <label className="label">
           <span className="label-text">To</span>
         </label>
