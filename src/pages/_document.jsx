@@ -8,10 +8,10 @@ export default function Document() {
         <link rel="manifest" href="/manifest.json" />
         <meta name="description" content="Event management website." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="application-name" content="PWA App" />
+        <meta name="application-name" content="Planorama" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="PWA App" />
+        <meta name="apple-mobile-web-app-title" content="Planorama" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-config" content="/icons/browserconfig.xml" />
@@ -34,7 +34,6 @@ export default function Document() {
           sizes="167x167"
           href="/icons/touch-icon-ipad-retina.png"
         />
-
         <link
           rel="icon"
           type="image/png"
@@ -55,22 +54,22 @@ export default function Document() {
         />
         <link rel="shortcut icon" href="/favicon.ico" />
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:url" content="https://yourdomain.com" />
-        <meta name="twitter:title" content="PWA App" />
-        <meta name="twitter:description" content="Best PWA App in the world" />
+        <meta name="twitter:url" content="https://planorama.vercel.app" />
+        <meta name="twitter:title" content="Planorama" />
+        <meta name="twitter:description" content="Event management site" />
         <meta
           name="twitter:image"
           content="https://yourdomain.com/icons/android-chrome-192x192.png"
         />
-        <meta name="twitter:creator" content="@DavidWShadow" />
+        <meta name="twitter:creator" content="@Nemila9" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="PWA App" />
-        <meta property="og:description" content="Best PWA App in the world" />
+        <meta property="og:title" content="Planorama" />
+        <meta property="og:description" content="Event management website" />
         <meta property="og:site_name" content="PWA App" />
-        <meta property="og:url" content="https://yourdomain.com" />
+        <meta property="og:url" content="https://planorama.vercel.app" />
         <meta
           property="og:image"
-          content="https://yourdomain.com/icons/apple-touch-icon.png"
+          content="https://planorama.vercel.app/icons/apple-touch-icon.png"
         />
 
         <link
